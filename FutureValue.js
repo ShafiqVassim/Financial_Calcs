@@ -6,12 +6,10 @@ import {
   Dialog,
   DialogContent,
   Grid,
-  Button,
   TableContainer,
   Table,
   IconButton,
   DialogTitle,
-  DialogActions,
   TextField,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
@@ -19,6 +17,7 @@ import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import Chart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const FutureValueCalc = () => {
   const [open, setOpen] = useState(false);
@@ -116,6 +115,10 @@ const FutureValueCalc = () => {
       xaxis: {
         categories: tenureValues,
       },
+      dataLabels: {
+        enabled: false,
+        fontSize: "12px",
+      }
     });
     setChartSeries([
       {
@@ -177,18 +180,7 @@ const FutureValueCalc = () => {
                 value={Tenure}
                 onChange={(e) => setTenure(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -205,7 +197,7 @@ const FutureValueCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Future Value Calculator
               </DialogTitle>
               <IconButton
@@ -278,7 +270,7 @@ const FutureValueCalc = () => {
                           <Table>
                             <ResultSection
                               title="Future Value :"
-                              copyValue={`₹${futureValueResult}`}
+                              CopyValue={`₹${futureValueResult}`}
                             />
                           </Table>
                         </TableContainer>

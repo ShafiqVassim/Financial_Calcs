@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import {
   Card,
-  Button,
   CardContent,
   Typography,
   Dialog,
   DialogContent,
   Grid,
-  DialogActions,
   TableContainer,
   Table,
   IconButton,
@@ -20,6 +18,7 @@ import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import ReactApexChart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const HRACalc = () => {
   const [open, setOpen] = useState(false);
@@ -205,20 +204,7 @@ const HRACalc = () => {
                 <MenuItem value="Metro City">Metro City</MenuItem>
                 <MenuItem value="Others">Others</MenuItem>
               </TextField>
-              <DialogActions>
-                {/* <Grid item xs={12} style={{ position: "relative",left : -7,   width: "100%" }}> */}
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-                {/* </ Grid> */}
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -235,8 +221,8 @@ const HRACalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
-                Financial Freedom Calculator
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
+                HRA Calculator
               </DialogTitle>
               <IconButton
                 aria-label="close"
@@ -320,12 +306,12 @@ const HRACalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
                               title="Your Exempted HRA is "
-                              copyValue={`₹ ${hraResult}`}
+                              CopyValue={`₹ ${hraResult}`}
                             />
                           </Table>
                         </TableContainer>

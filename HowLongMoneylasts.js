@@ -19,6 +19,8 @@ import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import Chart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
+
 
 const HowLongMoneyWillLastCalc = () => {
   const [open, setOpen] = useState(false);
@@ -161,7 +163,17 @@ const HowLongMoneyWillLastCalc = () => {
       xaxis: {
         categories: yearsToLast,
         labels: {
-          show: false,
+          show: true,
+        },
+        title: {
+          text: "Years to Last",
+          offsetX: 25,
+          offsetY: 0,
+          style: {
+          fontSize: "12px",
+          fontWeight: 450,
+          cssClass: "apexcharts-xaxis-title",
+          },
         },
         tooltip: {
           enabled: false,
@@ -282,18 +294,7 @@ const HowLongMoneyWillLastCalc = () => {
                   </Button>
                 </DialogActions>
               </Dialog>
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -310,7 +311,7 @@ const HowLongMoneyWillLastCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 How Long Money Will Last
               </DialogTitle>
               <IconButton
@@ -415,7 +416,7 @@ const HowLongMoneyWillLastCalc = () => {
                           <Table>
                             <ResultSection
                               title="Your Wealth will last for "
-                              copyValue={`${yearsToLast} Years`}
+                              CopyValue={`${yearsToLast} Years`}
                             />
                           </Table>
                         </TableContainer>

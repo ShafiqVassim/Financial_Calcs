@@ -8,8 +8,6 @@ import {
   Grid,
   TableContainer,
   Table,
-  Button,
-  DialogActions,
   IconButton,
   DialogTitle,
   MenuItem,
@@ -20,6 +18,8 @@ import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import ReactApexChart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
+
 
 const FinancialGoalCalc = () => {
   const [selectedGoal, setSelectedGoal] = useState("");
@@ -214,18 +214,7 @@ const FinancialGoalCalc = () => {
                   />
                 </Grid>
               </Grid>
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -242,7 +231,7 @@ const FinancialGoalCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Financial Goal Calculator
               </DialogTitle>
               <IconButton
@@ -336,16 +325,16 @@ const FinancialGoalCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
-                              title="Financial Freedom"
-                              copyValue={`₹${financialGoalResult.futureTargetValue}`}
+                              title="Future Target Value is "
+                              CopyValue={`₹${financialGoalResult.futureTargetValue}`}
                             />
                             <ResultSection
                               title="Monthly Investment Required"
-                              copyValue={`₹${financialGoalResult.monthlyInvestmentRequired}`}
+                              CopyValue={`₹${financialGoalResult.monthlyInvestmentRequired}`}
                             />
                           </Table>
                         </TableContainer>
@@ -379,5 +368,6 @@ const FinancialGoalCalc = () => {
     </div>
   );
 };
+
 
 export default FinancialGoalCalc;

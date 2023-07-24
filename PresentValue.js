@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,15 +10,14 @@ import {
   Table,
   IconButton,
   DialogTitle,
-  DialogActions,
   TextField,
-  Button,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import ReactApexChart from "react-apexcharts";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const PresentValueCalc = () => {
   const [open, setOpen] = useState(false);
@@ -167,18 +166,7 @@ const PresentValueCalc = () => {
                 value={years}
                 onChange={(e) => setYears(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -195,7 +183,7 @@ const PresentValueCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Present Value Calculator
               </DialogTitle>
               <IconButton
@@ -262,12 +250,12 @@ const PresentValueCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
                               title="Present Value is"
-                              copyValue={`₹${presentValue}`}
+                              CopyValue={`₹${presentValue}`}
                             />
                           </Table>
                         </TableContainer>

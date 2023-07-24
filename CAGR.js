@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import {
-  Button,
   Card,
   CardContent,
   Typography,
   Dialog,
   DialogContent,
   TextField,
-  DialogActions,
   Grid,
   TableContainer,
   Table,
@@ -19,6 +17,8 @@ import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import Chart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
+import './style.css';
 
 const CAGRCalc = () => {
   const [open, setOpen] = useState(false);
@@ -102,6 +102,9 @@ const CAGRCalc = () => {
       xaxis: {
         categories: tenureValues,
       },
+      dataLabels: {
+        enabled: false,
+      }
     });
     setChartSeries([
       {
@@ -163,18 +166,7 @@ const CAGRCalc = () => {
                 value={tenure}
                 onChange={(e) => setTenure(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -191,7 +183,7 @@ const CAGRCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 CAGR Calculator
               </DialogTitle>
               <IconButton
@@ -259,12 +251,12 @@ const CAGRCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
-                              title={"Required CAGR to Achieve Target"}
-                              copyValue={`${cagr} %`}
+                              title={"Required CAGR is "}
+                              CopyValue={`${cagr} %`}
                             />
                           </Table>
                         </TableContainer>

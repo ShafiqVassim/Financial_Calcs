@@ -10,15 +10,15 @@ import {
   Table,
   TextField,
   IconButton,
-  Button,
   DialogTitle,
-  DialogActions,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import ReactApexChart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
+
 
 const IncomeTaxCalc = () => {
   const [open, setOpen] = useState(false);
@@ -356,18 +356,7 @@ const IncomeTaxCalc = () => {
                   setDeductions({ ...deductions, nps: e.target.value })
                 }
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -384,7 +373,7 @@ const IncomeTaxCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Income Tax Calculator
               </DialogTitle>
               <IconButton
@@ -500,8 +489,8 @@ const IncomeTaxCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
-                        <Typography variant="h5">
+                      <Typography variant="h4">Result</Typography>
+                        <Typography variant="h5" sx={{ paddingLeft: "80px" }} align="left">
                           {incomeTaxResult < oldincomeTaxResult ? (
                             <h3>
                               You should go with the{" "}
@@ -523,16 +512,16 @@ const IncomeTaxCalc = () => {
                         <TableContainer>
                           <Table>
                             <ResultSection
-                              title="You will Pay"
-                              copyValue={`₹${Math.abs(difference)}`}
+                              title="Difference"
+                              CopyValue={`₹${Math.abs(difference)}`}
                             />
                             <ResultSection
                               title="Old Income Tax"
-                              copyValue={`₹${oldincomeTaxResult}`}
+                              CopyValue={`₹${oldincomeTaxResult}`}
                             />
                             <ResultSection
                               title="New Income Tax"
-                              copyValue={`₹${incomeTaxResult}`}
+                              CopyValue={`₹${incomeTaxResult}`}
                             />
                           </Table>
                         </TableContainer>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,15 +10,14 @@ import {
   Table,
   IconButton,
   DialogTitle,
-  DialogActions,
   TextField,
-  Button,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import Chart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const SIPCalc = () => {
   const [open, setOpen] = useState(false);
@@ -39,10 +38,10 @@ const SIPCalc = () => {
       title: {
         text: "Year",
         offsetX: 0,
-        offsetY: 0,
+        offsetY: 10,
         style: {
           fontSize: "12px",
-          fontWeight: 600,
+          fontWeight: 450,
           cssClass: "apexcharts-xaxis-title",
         },
       },
@@ -123,7 +122,23 @@ const SIPCalc = () => {
       ...chartOptions,
       xaxis: {
         categories: tenureValues,
+      labels: {
+        show: true,
       },
+      title: {
+        text: "Years",
+        offsetX: 25,
+        offsetY: 0,
+        style: {
+        fontSize: "12px",
+        fontWeight: 450,
+        cssClass: "apexcharts-xaxis-title",
+        },
+      },
+      },
+      dataLabels: {
+        enabled: false,
+      }
     });
     setChartSeries([
       {
@@ -185,18 +200,7 @@ const SIPCalc = () => {
                 value={tenure}
                 onChange={(e) => setTenure(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -213,7 +217,7 @@ const SIPCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 SIP Calculator
               </DialogTitle>
               <IconButton
@@ -288,12 +292,12 @@ const SIPCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
-                              title="Final SIP Amount"
-                              copyValue={`₹${maturityValue}`}
+                              title="Final Amount is"
+                              CopyValue={`₹${maturityValue}`}
                             />
                           </Table>
                         </TableContainer>

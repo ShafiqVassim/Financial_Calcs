@@ -20,34 +20,35 @@ import ReactApexChart from "react-apexcharts";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
+import ButtonCalc from "./Components/ButtonCalc.js";
 
-const years = [
-  { year: "2001-02", costInflationIndex: 100 },
-  { year: "2002-03", costInflationIndex: 105 },
-  { year: "2003-04", costInflationIndex: 109 },
-  { year: "2004-05", costInflationIndex: 113 },
-  { year: "2005-06", costInflationIndex: 117 },
-  { year: "2006-07", costInflationIndex: 122 },
-  { year: "2007-08", costInflationIndex: 129 },
-  { year: "2008-09", costInflationIndex: 137 },
-  { year: "2009-10", costInflationIndex: 148 },
-  { year: "2010-11", costInflationIndex: 167 },
-  { year: "2011-12", costInflationIndex: 184 },
-  { year: "2012-13", costInflationIndex: 200 },
-  { year: "2013-14", costInflationIndex: 220 },
-  { year: "2014-15", costInflationIndex: 240 },
-  { year: "2015-16", costInflationIndex: 254 },
-  { year: "2016-17", costInflationIndex: 264 },
-  { year: "2017-18", costInflationIndex: 272 },
-  { year: "2018-19", costInflationIndex: 280 },
-  { year: "2019-20", costInflationIndex: 289 },
-  { year: "2020-21", costInflationIndex: 301 },
-  { year: "2021-22", costInflationIndex: 317 },
-  { year: "2022-23", costInflationIndex: 331 },
-];
 
 const CapitalGainCalc = () => {
   const [open, setOpen] = useState(false);
+  const years = [
+    { year: "2001-02", costInflationIndex: 100 },
+    { year: "2002-03", costInflationIndex: 105 },
+    { year: "2003-04", costInflationIndex: 109 },
+    { year: "2004-05", costInflationIndex: 113 },
+    { year: "2005-06", costInflationIndex: 117 },
+    { year: "2006-07", costInflationIndex: 122 },
+    { year: "2007-08", costInflationIndex: 129 },
+    { year: "2008-09", costInflationIndex: 137 },
+    { year: "2009-10", costInflationIndex: 148 },
+    { year: "2010-11", costInflationIndex: 167 },
+    { year: "2011-12", costInflationIndex: 184 },
+    { year: "2012-13", costInflationIndex: 200 },
+    { year: "2013-14", costInflationIndex: 220 },
+    { year: "2014-15", costInflationIndex: 240 },
+    { year: "2015-16", costInflationIndex: 254 },
+    { year: "2016-17", costInflationIndex: 264 },
+    { year: "2017-18", costInflationIndex: 272 },
+    { year: "2018-19", costInflationIndex: 280 },
+    { year: "2019-20", costInflationIndex: 289 },
+    { year: "2020-21", costInflationIndex: 301 },
+    { year: "2021-22", costInflationIndex: 317 },
+    { year: "2022-23", costInflationIndex: 331 },
+  ];
   const [iconHovered, setIconHovered] = useState(false);
   const [amountInvested, setAmountInvested] = useState("");
   const [buyYear, setBuyYear] = useState("");
@@ -260,7 +261,7 @@ const CapitalGainCalc = () => {
                 <DialogTitle>Alert</DialogTitle>
                 <DialogContent>
                   <h3>
-                    Capital Gain Year is not applicable within{" "}
+                    Capital Gains is not applicable within{" "}
                     <span style={{ color: "#0b75ff" }}> 3 years.</span>
                     {"  "}
                   </h3>
@@ -276,18 +277,7 @@ const CapitalGainCalc = () => {
                   </Button>
                 </DialogActions>
               </Dialog>
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -304,7 +294,7 @@ const CapitalGainCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Capital Gain Calculator
               </DialogTitle>
               <IconButton
@@ -389,8 +379,8 @@ const CapitalGainCalc = () => {
                               <DialogTitle>Year Alert</DialogTitle>
                               <DialogContent>
                                 <h3>
-                                  Capital Gains Year is not applicable within{" "}
-                                  <span style={{ color: "primary" }}>
+                                  Capital Gains is not applicable within{" "}
+                                  <span style={{ color: "#0b75ff" }}>
                                     3 years.
                                   </span>{" "}
                                 </h3>
@@ -425,20 +415,20 @@ const CapitalGainCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
                               title={"Capital Gain "}
-                              copyValue={`₹${capitalGainResult}`}
+                              CopyValue={`₹${capitalGainResult}`}
                             />
                             <ResultSection
                               title={"Capital Gain Tax"}
-                              copyValue={`₹${capitalGainTax}`}
+                              CopyValue={`₹${capitalGainTax}`}
                             />
                             <ResultSection
                               title={"Index Cost Price"}
-                              copyValue={`₹${indexCostprice}`}
+                              CopyValue={`₹${indexCostprice}`}
                             />
                           </Table>
                         </TableContainer>

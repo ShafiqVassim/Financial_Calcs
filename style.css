@@ -22,13 +22,16 @@
   }
 
   .completed{
-    /* background-color:rgb(30, 171, 30); */
-    background-color: #4a81ca;
+    background-color:#14539a;
     color: white;
     width: 500px;
     border: 8px solid;
     border-color: white;
     border-radius: 12px;
+  }
+  .completed:hover {
+    background-color: #103865;
+    color: white;
   }
   .completeit{
     background-color:rgb(200, 208, 41);

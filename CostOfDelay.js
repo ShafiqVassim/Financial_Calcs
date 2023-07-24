@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import {
   Card,
   CardContent,
-  Button,
   Typography,
   Dialog,
   DialogContent,
   Grid,
   TableContainer,
   Table,
-  DialogActions,
   TextField,
   IconButton,
   DialogTitle,
@@ -19,6 +17,7 @@ import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import ReactApexChart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const CostOfDelayCalc = () => {
   const [open, setOpen] = useState(false);
@@ -49,6 +48,7 @@ const CostOfDelayCalc = () => {
     setNumOfYears("");
     setDelayInInvestment("");
     setChartData(null);
+    setShowOutput(false);
   };
 
   const handleClear = () => {
@@ -203,18 +203,7 @@ const CostOfDelayCalc = () => {
                 value={delayInInvestment}
                 onChange={(e) => setDelayInInvestment(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  CLose
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -231,7 +220,7 @@ const CostOfDelayCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Cost of Delay Calculator
               </DialogTitle>
               <IconButton
@@ -306,24 +295,24 @@ const CostOfDelayCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
                               title={"Your Target Wealth will reduce by "}
-                              copyValue={`${targetWealthReduction}%`}
+                              CopyValue={`${targetWealthReduction}%`}
                             />
                             <ResultSection
                               title={"New SIP required to reach new Target "}
-                              copyValue={`₹${newSipRequired}`}
+                              CopyValue={`₹${newSipRequired}`}
                             />
                             <ResultSection
                               title={"Future Value without delay "}
-                              copyValue={`₹${costOfDelayWithoutDelay}`}
+                              CopyValue={`₹${costOfDelayWithoutDelay}`}
                             />
                             <ResultSection
                               title={"Future Value with delay "}
-                              copyValue={`₹${costOfDelayWithDelay}`}
+                              CopyValue={`₹${costOfDelayWithDelay}`}
                             />
                           </Table>
                         </TableContainer>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,15 +10,14 @@ import {
   Table,
   IconButton,
   DialogTitle,
-  DialogActions,
   TextField,
-  Button,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import ReactApexChart from "react-apexcharts";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const LifeInsuranceCalc = () => {
   const [open, setOpen] = useState(false);
@@ -192,18 +191,7 @@ const LifeInsuranceCalc = () => {
                 value={yearlyIncome}
                 onChange={(e) => setYearlyIncome(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -220,7 +208,7 @@ const LifeInsuranceCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Life Insurance Calculator
               </DialogTitle>
               <IconButton
@@ -303,20 +291,20 @@ const LifeInsuranceCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
-                              title={"Current Life Insurance"}
-                              copyValue={`₹${currentLifeInsurance}`}
+                              title={"Current Life Insurance is"}
+                              CopyValue={`₹${currentLifeInsurance}`}
                             />
                             <ResultSection
-                              title={"Additional Insurance Needed"}
-                              copyValue={`₹${additionalInsuranceNeeded}`}
+                              title={"Additional Insurance Needed is"}
+                              CopyValue={`₹${additionalInsuranceNeeded}`}
                             />
                             <ResultSection
-                              title={"Total Life Insurance"}
-                              copyValue={`₹${totalLifeInsurance}`}
+                              title={"Total Life Insurance is"}
+                              CopyValue={`₹${totalLifeInsurance}`}
                             />
                           </Table>
                         </TableContainer>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,15 +10,14 @@ import {
   Table,
   IconButton,
   DialogTitle,
-  DialogActions,
   TextField,
-  Button,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import ReactApexChart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const ReverseSIPCalc = () => {
   const [open, setOpen] = useState(false);
@@ -155,18 +154,7 @@ const ReverseSIPCalc = () => {
                 value={tenure}
                 onChange={(e) => setTenure(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -183,7 +171,7 @@ const ReverseSIPCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Reverse SIP Calculator
               </DialogTitle>
               <IconButton
@@ -250,12 +238,12 @@ const ReverseSIPCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
                               title="SIP Required to achieve target wealth is "
-                              copyValue={`₹${reverseSip}`}
+                              CopyValue={`₹${reverseSip}`}
                             />
                           </Table>
                         </TableContainer>
