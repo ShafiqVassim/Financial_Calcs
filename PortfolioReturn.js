@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,15 +10,14 @@ import {
   Table,
   IconButton,
   DialogTitle,
-  DialogActions,
   TextField,
-  Button,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
-import ReactApexChart from "react-apexcharts";
+import ReactApexChart from 'react-apexcharts';
+import ButtonCalc from "./Components/ButtonCalc";
 
 const PortfolioReturnCalc = () => {
   const [open, setOpen] = useState(false);
@@ -481,18 +480,7 @@ const PortfolioReturnCalc = () => {
                   />
                 </Grid>
               </Grid>
-              <DialogActions>
-                <Button type="submit" variant="contained" color="primary">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -509,7 +497,7 @@ const PortfolioReturnCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Portfolio Return Calculator
               </DialogTitle>
               <IconButton
@@ -674,15 +662,15 @@ const PortfolioReturnCalc = () => {
                           <Table>
                             <ResultSection
                               title="Portfolio Return"
-                              copyValue={`${portfolioReturn}%`}
+                              CopyValue={`${portfolioReturn}%`}
                             />
                             <ResultSection
                               title="Total Assets Value"
-                              copyValue={`₹${totalAssetsValue}`}
+                              CopyValue={`₹${totalAssetsValue}`}
                             />
                             <ResultSection
                               title="Total Investments"
-                              copyValue={`₹${totalClassValue}`}
+                              CopyValue={`₹${totalClassValue}`}
                             />
                           </Table>
                         </TableContainer>

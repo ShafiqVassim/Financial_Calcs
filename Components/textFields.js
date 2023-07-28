@@ -1,21 +1,21 @@
 import React from "react";
-import { Grid,TextField } from "@mui/material";
+import { Grid,MenuItem,TextField } from "@mui/material";
 
-const InputField = ({ label, value, onChange }) => {
+const InputField = ({ label, value, onChange, select   }) => {
   return (
-    <Grid item xs={12} style={{marginBottom: "1.5rem"}}>
+    <Grid item xs={12} style={{marginBottom: "2.5rem"}}>
     <TextField
       label={label}
       value={value}
-      fullWidth
-      margin="normal"
-      required
-      type="number"
       onChange={onChange}
-      step="any"
+      type="number"
+      step="0.01"
       variant="outlined"
-      style={{marginBottom: "-20px"}}
-    />
+      required
+      margin="normal"
+      fullWidth
+      style={{marginBottom: "-30px"}}
+     />
     </Grid>
   );
 };

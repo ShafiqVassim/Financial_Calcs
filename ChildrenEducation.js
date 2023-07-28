@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Card,
-  Button,
   CardContent,
   Typography,
   Dialog,
@@ -11,7 +10,6 @@ import {
   Table,
   IconButton,
   DialogTitle,
-  DialogActions,
   TextField,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
@@ -19,10 +17,10 @@ import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import Chart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const ChildrenEducationCalc = () => {
   const [open, setOpen] = useState(false);
-  const [iconHovered, setIconHovered] = useState(false);
   const [childAge, setChildAge] = useState("");
   const [graduationExpenses, setGraduationExpenses] = useState("");
   const [postGraduationExpenses, setPostGraduationExpenses] = useState("");
@@ -209,18 +207,7 @@ const ChildrenEducationCalc = () => {
                 value={returnRate}
                 onChange={(e) => setReturnRate(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -237,7 +224,7 @@ const ChildrenEducationCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Children Education Calculator
               </DialogTitle>
               <IconButton
@@ -245,11 +232,7 @@ const ChildrenEducationCalc = () => {
                 onClick={handleClose}
                 style={{ position: "absolute", right: 10, top: 10 }}
               >
-                <CloseIcon
-                  color={iconHovered ? "error" : "primary"}
-                  onMouseEnter={() => setIconHovered(true)}
-                  onMouseLeave={() => setIconHovered(false)}
-                />
+                <CloseIcon color="primary" />
               </IconButton>
               <DialogContent
                 style={{
@@ -311,7 +294,6 @@ const ChildrenEducationCalc = () => {
                   </Grid>
 
                   <Grid item xs={12} md={8} style={{ height: "100%" }}>
-                    {showOutput && ( // Conditionally render the output card
                       <Card
                         style={{
                           height: "15%",
@@ -320,24 +302,24 @@ const ChildrenEducationCalc = () => {
                         }}
                       >
                         <CardContent style={{ flex: 1 }}>
-                          <Typography variant="h4">Result</Typography>
+                        <Typography variant="h4">Result</Typography>
                           <TableContainer>
                             <Table>
                               <ResultSection
                                 title="SIP Required To Achieve Target"
-                                copyValue={`₹${educationGoal.sipRequired}`}
+                                CopyValue={`₹${educationGoal.sipRequired}`}
                               />
                               <ResultSection
                                 title="Money Required for Graduation"
-                                copyValue={`₹${educationGoal.graduateValue}`}
+                                CopyValue={`₹${educationGoal.graduateValue}`}
                               />
                               <ResultSection
                                 title="Money Required for Post-Graduation"
-                                copyValue={`₹${educationGoal.postGraduateValue}`}
+                                CopyValue={`₹${educationGoal.postGraduateValue}`}
                               />
                               <ResultSection
                                 title="Total Money Required"
-                                copyValue={`₹${educationGoal.totalRequired}`}
+                                CopyValue={`₹${educationGoal.totalRequired}`}
                               />
                             </Table>
                           </TableContainer>
@@ -350,16 +332,17 @@ const ChildrenEducationCalc = () => {
                           }}
                         >
                           <CardContent>
-                            <Chart
-                              options={chartOptions}
-                              series={chartSeries}
-                              type="bar"
-                              height={250}
-                            />
+                            {Chart && (
+                              <Chart
+                                options={chartOptions}
+                                series={chartSeries}
+                                type="bar"
+                                height={250}
+                              />
+                            )}
                           </CardContent>
                         </Card>
                       </Card>
-                    )}
                   </Grid>
                 </Grid>
               </DialogContent>

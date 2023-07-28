@@ -10,15 +10,14 @@ import {
   Table,
   IconButton,
   DialogTitle,
-  DialogActions,
   TextField,
-  Button,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
-import ReactApexChart from "react-apexcharts";
+import Chart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const StepUpSipCalc = () => {
   const [open, setOpen] = useState(false);
@@ -27,7 +26,9 @@ const StepUpSipCalc = () => {
   const [expectedReturn, setExpectedReturn] = useState("");
   const [tenure, setTenure] = useState("");
   const [AnnualInc, setAnnualInc] = useState("");
-  const [chartData, setchartData] = useState(null);
+  const [maturityValue, setMaturityValue] = useState("");
+  const [chartOptions, setChartOptions] = useState({});
+  const [chartSeries, setChartSeries] = useState([]);
   const [showOutput, setShowOutput] = useState(false);
   const [Result, setResult] = useState("");
 
@@ -56,48 +57,6 @@ const StepUpSipCalc = () => {
     handleClickOpen();
   };
 
-  const generateChartData = (arr) => {
-    return {
-      series: [
-        {
-          name: "Annual Amount",
-          data: arr.map((value) => Math.floor(Math.round(value))),
-          // data: arr.slice(startindex, endindex).map((value) => Math.floor(Math.round(value))),
-        },
-      ],
-      options: {
-        chart: {
-          type: "bar",
-          height: 500,
-          toolbar: {
-            show: false,
-          },
-        },
-        xaxis: {
-          title: {},
-          categories: Array.from(
-            { length: arr.length },
-            (_, index) => index + 1
-          ),
-        },
-        yaxis: {
-          title: {},
-        },
-        legend: {
-          position: "top",
-          horizontalAlign: "right",
-          offsetY: -20,
-        },
-        fill: {
-          opacity: 1,
-        },
-        dataLabels: {
-          enabled: false,
-        },
-      },
-    };
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -112,11 +71,103 @@ const StepUpSipCalc = () => {
       annual = totalvalues + sip * 12;
       totalvalues = annual * (1 + expectedReturn / 100);
     }
+
     setResult({ annual: Math.round(arr[tenure - 1]) });
     setShowOutput(true);
+    // Calculate maturityValue with AnnualInc set to 0
+    let arr2 = [];
+     sip = sipAmount;
+     annual = sip * 12;
+     totalvalues = annual * (1 + expectedReturn / 100);
+    const tenureValue = [];
 
-    const chartData = generateChartData(arr);
-    setchartData(chartData);
+     for (let i = 0; i < tenure; i++) {
+      arr2.push(annual);
+      sip = sip * (1 + 0 / 100); // Set AnnualInc to 0
+      annual = totalvalues + sip * 12;
+      totalvalues = annual * (1 + expectedReturn / 100);
+      tenureValue.push(`${i +1 }`);
+    }
+    setMaturityValue( Math.round(arr2[tenure - 1]));
+
+    const options = {
+      chart: {
+        type: "bar",
+        stacked: true,
+        height: 350,
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+        },
+      },
+      dataLabels: {
+        enabled: false, 
+      },
+      xaxis: {
+        categories: tenureValue,
+        labels: {
+          show: true,
+        },
+        title: {
+          text: "Year",
+          offsetX: 25,
+          offsetY: 0,
+          style: {
+            fontSize: "12px",
+            fontWeight: 450,
+            cssClass: "apexcharts-xaxis-title",
+          }
+        } 
+      },
+      yaxis: {
+        labels: {
+          formatter: function (value) {
+            return Math.round(value); // Round the y-axis values
+          },
+        },
+        title: {
+          text: "Amount",
+          offsetX: 0,
+          offsetY: 10,
+          style: {
+            fontSize: "12px",
+            fontWeight: 400,
+            cssClass: "apexcharts-yaxis-title",
+          },
+        }
+      },
+      tooltip: {
+        y: {
+          formatter: function (value) {
+            return Math.round(value); // Limit decimal places in tooltip to 2
+          },
+        },
+      },
+      legend: {
+        position: "top",
+      },
+      fill: {
+        opacity: 1,
+      },
+    };
+
+    const series = [
+      {
+        name: "SIP Amount",
+        data: arr2,
+      },
+      {
+        name: "Step-Up Amount",
+        data: arr,
+      },
+    ];
+
+    setChartOptions(options);
+    setChartSeries(series);
   };
 
   return (
@@ -130,11 +181,11 @@ const StepUpSipCalc = () => {
     >
       <Card className="completed">
         <CardContent onClick={handleCardClick}>
-          <h3>Step Up Sip Calculator</h3>
+          <h3>Step Up SIP Calculator</h3>
         </CardContent>
       </Card>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Step Up Sip</DialogTitle>
+        <DialogTitle>Step Up SIP Calculator</DialogTitle>
         <DialogContent>
           {!showOutput ? (
             <form onSubmit={handleSubmit}>
@@ -182,18 +233,7 @@ const StepUpSipCalc = () => {
                 value={AnnualInc}
                 onChange={(e) => setAnnualInc(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -210,9 +250,9 @@ const StepUpSipCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 {" "}
-                Step Up Sip Calculator
+                Step Up SIP Calculator
               </DialogTitle>
               <IconButton
                 aria-label="close"
@@ -289,8 +329,12 @@ const StepUpSipCalc = () => {
                         <TableContainer>
                           <Table>
                             <ResultSection
-                              title="Final Amount"
-                              copyValue={`₹${Result.annual}`}
+                              title="Final Amount of Step Up SIP is"
+                              CopyValue={`₹${Result.annual}`}
+                            />
+                            <ResultSection
+                              title="Final Amount of SIP is"
+                              CopyValue={`₹${maturityValue}`}
                             />
                           </Table>
                         </TableContainer>
@@ -303,14 +347,12 @@ const StepUpSipCalc = () => {
                         }}
                       >
                         <CardContent>
-                          {chartData && (
-                            <ReactApexChart
-                              options={chartData.options}
-                              series={chartData.series}
-                              type="bar"
-                              height={400}
-                            />
-                          )}
+                        <Chart
+                            options={chartOptions}
+                            series={chartSeries}
+                            type="bar"
+                            height={420}
+                          />
                         </CardContent>
                       </Card>
                     </Card>

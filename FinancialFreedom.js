@@ -19,6 +19,7 @@ import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import Chart from "react-apexcharts";
+import ButtonCalc from "./Components/ButtonCalc";
 
 const FinancialFreedomCalc = () => {
   const [open, setOpen] = useState(false);
@@ -168,7 +169,7 @@ const FinancialFreedomCalc = () => {
       xaxis: {
         categories: counted,
         labels: {
-          show: false,
+          show: true,
         },
         tooltip: {
           enabled: false,
@@ -311,18 +312,7 @@ const FinancialFreedomCalc = () => {
                   </Button>
                 </DialogActions>
               </Dialog>
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -339,7 +329,7 @@ const FinancialFreedomCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Financial Freedom Calculator
               </DialogTitle>
               <IconButton
@@ -446,20 +436,20 @@ const FinancialFreedomCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
-                              title="Financial Freedom Result "
-                              copyValue={`${financialFreedomResult.financialFreedomResult} Years`}
+                              title="Financially Free in "
+                            CopyValue={`${financialFreedomResult.financialFreedomResult} Years`}
                             />
                             <ResultSection
                               title="Target Wealth "
-                              copyValue={`₹ ${financialFreedomResult.targetWealth}`}
+                            CopyValue={`₹ ${financialFreedomResult.targetWealth}`}
                             />
                             <ResultSection
                               title="Per Month Pension Required "
-                              copyValue={`₹ ${financialFreedomResult.perMonthPensionRequired}`}
+                            CopyValue={`₹ ${financialFreedomResult.perMonthPensionRequired}`}
                             />
                           </Table>
                         </TableContainer>

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import {
   Card,
-  Button,
   CardContent,
   Typography,
   Dialog,
   DialogContent,
-  DialogActions,
   Grid,
   TableContainer,
   Table,
@@ -19,7 +17,8 @@ import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
 import Chart from "react-apexcharts";
-import "./style.css";
+import ButtonCalc from "./Components/ButtonCalc";
+
 
 const EMICalc = () => {
   const [open, setOpen] = useState(false);
@@ -119,6 +118,19 @@ const EMICalc = () => {
       },
       xaxis: {
         categories: chartCategories, // Use the chartCategories array for x-axis labels
+        labels: {
+          show: true,
+        },
+        title: {
+          text: "Year",
+          offsetX: 25,
+          offsetY: 0,
+          style: {
+            fontSize: "12px",
+            fontWeight: 450,
+            cssClass: "apexcharts-xaxis-title",
+          }
+        } 
       },
       yaxis: {
         labels: {
@@ -126,6 +138,16 @@ const EMICalc = () => {
             return Math.round(value); // Round the y-axis values
           },
         },
+        title: {
+          text: "Amount",
+          offsetX: 0,
+          offsetY: 10,
+          style: {
+            fontSize: "12px",
+            fontWeight: 400,
+            cssClass: "apexcharts-yaxis-title",
+          },
+        }
       },
       tooltip: {
         y: {
@@ -144,7 +166,7 @@ const EMICalc = () => {
 
     const series = [
       {
-        name: "Interest Rate",
+        name: "Interest Amount",
         data: interestData,
       },
       {
@@ -209,18 +231,7 @@ const EMICalc = () => {
                 value={tenure}
                 onChange={(e) => setTenure(e.target.value)}
               />
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -237,7 +248,7 @@ const EMICalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 EMI Calculator
               </DialogTitle>
               <IconButton
@@ -303,20 +314,20 @@ const EMICalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
                               title={"EMI Amount "}
-                              copyValue={`₹ ${emiResult}`}
+                              CopyValue={`₹ ${emiResult}`}
                             />
                             <ResultSection
                               title={"Interest Paid"}
-                              copyValue={`₹ ${interestPaid}`}
+                              CopyValue={`₹ ${interestPaid}`}
                             />
                             <ResultSection
                               title={"Principal Paid"}
-                              copyValue={`₹ ${principalPaid}`}
+                              CopyValue={`₹ ${principalPaid}`}
                             />
                           </Table>
                         </TableContainer>
@@ -335,7 +346,6 @@ const EMICalc = () => {
                             series={chartSeries}
                             type="bar"
                             height={420}
-                            width={600}
                           />
                         </CardContent>
                       </Card>

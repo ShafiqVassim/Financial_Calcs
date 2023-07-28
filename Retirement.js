@@ -10,14 +10,15 @@ import {
   Table,
   IconButton,
   DialogTitle,
-  DialogActions,
   TextField,
-  Button,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
+import ButtonCalc from "./Components/ButtonCalc";
+import img1 from "./images/2.jpeg";
+import Chart from "react-apexcharts";
 
 const RetirementCalc = () => {
   const [open, setOpen] = useState(false);
@@ -33,6 +34,44 @@ const RetirementCalc = () => {
   const [corpusNeeded, setcorpusNeeded] = useState("");
   const [monthlyNeeded, setmonthlyNeeded] = useState("");
   const [showOutput, setShowOutput] = useState(false); // New state variable for output visibility
+  const [chartOptions, setChartOptions] = useState({
+    chart: {
+      id: "future-value-chart",
+      toolbar: {
+        show: false,
+      },
+    },
+    xaxis: {
+      title: {
+        text: "Year",
+        offsetX: 0,
+        offsetY: 10,
+        style: {
+          fontSize: "12px",
+          fontWeight: 600,
+          cssClass: "apexcharts-xaxis-title",
+        },
+      },
+    },
+    yaxis: {
+      title: {
+        text: "Corpus Left",
+        offsetX: 0,
+        offsetY: 10,
+        style: {
+          fontSize: "12px",
+          fontWeight: 400,
+          cssClass: "apexcharts-yaxis-title",
+        },
+      },
+    },
+  });
+  const [chartSeries, setChartSeries] = useState([
+    {
+      name: "Target Value",
+      data: [],
+    },
+  ]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -40,6 +79,7 @@ const RetirementCalc = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setMonthlyExpenses("");
     setCurrentAge("");
     setRetirementAge("");
     setRetirementTillAge("");
@@ -53,6 +93,7 @@ const RetirementCalc = () => {
   };
 
   const handleClear = () => {
+    setMonthlyExpenses("");
     setCurrentAge("");
     setRetirementAge("");
     setRetirementTillAge("");
@@ -99,10 +140,148 @@ const RetirementCalc = () => {
       (Math.pow(1 + returnsValue / 12, yearsToRetirement * 12) - 1);
     console.log("monthlyNeededValue", monthlyNeededValue);
 
+    const chartup = retirementAge - currentAge;
+    console.log("chartup", chartup);
+
+    let a = monthlyNeededValue * 12;
+    console.log("initial value", a);
+
+    const calculatedValues = [Math.round(a)];
+
+    for (let i = 1; i < chartup; i++) {
+      const b = a * (1 + returnsValue) + monthlyNeededValue * 12;
+      a = b;
+      calculatedValues.push(Math.round(a));
+      console.log("a", Math.round(a));
+    }
+
+    console.log("calculatedValues", calculatedValues);
+
+    const currentYear = new Date().getFullYear(); // Get the current year
+    const years = [currentYear + 1];
+
+    for (let i = 1; i < chartup - 1; i++) {
+      const year = currentYear + 1 + i;
+      years.push(year);
+    }
+    console.log("years", years);
+
+    let next_chart = parseInt(calculatedValues.slice(-1));
+    console.log(next_chart);
+    let array2 = [];
+    let power_value = chartup + 1;
+
+    while (next_chart > 0) {
+      let part2 = Math.round(
+        monthlyExpenses * 12 * Math.pow(1 + inflationValue, power_value)
+      );
+      console.log(part2);
+      power_value += 1;
+      // console.log((next_chart))
+      next_chart = next_chart * (1 + returnsValue) - part2;
+
+      if (next_chart > 0) {
+        array2.push(Math.floor(next_chart));
+      }
+    }
+    console.log("ghj", array2);
+
+    const yearsArray2 = [];
+    let nextYear = years[years.length - 1] + 1;
+    for (let i = 0; i <= array2.length; i++) {
+      yearsArray2.push(nextYear);
+      nextYear++;
+    }
+
+    console.log("yearsArray2", yearsArray2);
+
+    console.log("yearsArray2", yearsArray2);
+    console.log("array2", array2);
+
     setmonthlyExpensesat(Math.round(monthlyExpenseatValue));
     setcorpusNeeded(Math.floor(Math.round(corpusNeededValue)));
     setmonthlyNeeded(Math.floor(Math.round(monthlyNeededValue)));
     setShowOutput(true);
+
+    const allYears = [...years, ...yearsArray2];
+
+    // Calculate the length of calculatedValues
+    const calculatedValuesLength = calculatedValues.length;
+
+    // Create a new array containing null values to fill the gap between calculatedValues and array2
+    const nullValues = Array(calculatedValuesLength).fill(null);
+
+    // Combine the null values and array2 data
+    const combinedData = [...nullValues, ...array2];
+    console.log("combinedData", combinedData);
+
+    setChartOptions({
+      ...chartOptions,
+      chart: {
+        type: "bar",
+        stacked: "false",
+        height: 380,
+        toolbar: {
+          show: false,
+        },
+      },
+      xaxis: {
+        categories: allYears,
+        title: {
+          text: "Year",
+          offsetX: 0,
+          offsetY: -10,
+          style: {
+            fontSize: "12px",
+            fontWeight: 450,
+            cssClass: "apexcharts-xaxis-title",
+          },
+        },
+        tickAmount: Math.ceil(allYears.length / 3),
+      },
+      dataLabels: {
+        enabled: false,
+        fontSize: "12px",
+      },
+      annotations: {
+        xaxis: [
+          {
+            x: years[years.length + 2],
+            borderColor: "#000",
+            borderWidth: 1,
+            label: {
+              borderColor: "#000",
+              style: {
+                fontSize: "12px",
+                color: "#fff",
+                background: "#000",
+                padding: {
+                  left: 5,
+                  right: 5,
+                  top: 2,
+                  bottom: 2,
+                },
+              },
+              text: "Retirement",
+            },
+          },
+        ],
+      },
+      legend: {
+        position: "top",
+      },
+    });
+
+    setChartSeries([
+      {
+        name: "Accumulation",
+        data: calculatedValues,
+      },
+      {
+        name: "Distribution",
+        data: combinedData,
+      },
+    ]);
   };
 
   return (
@@ -204,18 +383,7 @@ const RetirementCalc = () => {
                 onChange={(e) => setCurrentInvestment(e.target.value)}
               />
 
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -232,7 +400,7 @@ const RetirementCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Retirement Calculator
               </DialogTitle>
               <IconButton
@@ -329,19 +497,38 @@ const RetirementCalc = () => {
                           <Table>
                             <ResultSection
                               title="Corpus Needed At Retirement"
-                              copyValue={`₹${corpusNeeded}`}
+                              CopyValue={`₹${corpusNeeded}`}
                             />
                             <ResultSection
                               title="Monthly Investment Needed"
-                              copyValue={`₹${monthlyNeeded}`}
+                              CopyValue={`₹${monthlyNeeded}`}
                             />
                             <ResultSection
                               title="Monthly Expenses At Retirement at 60"
-                              copyValue={`₹${monthlyExpensesat}`}
+                              CopyValue={`₹${monthlyExpensesat}`}
                             />
                           </Table>
                         </TableContainer>
                       </CardContent>
+                      <Card
+                        style={{
+                          height: "100%",
+                          overflowY: "auto",
+                          marginTop: "-2rem",
+                        }}
+                      >
+                        <CardContent align="center">
+                          {/* <img src={img1} alt="" height={480}   /> */}
+                          {Chart && (
+                            <Chart
+                              options={chartOptions}
+                              series={chartSeries}
+                              type="bar"
+                              height={450}
+                            />
+                          )}
+                        </CardContent>
+                      </Card>
                     </Card>
                   </Grid>
                 </Grid>

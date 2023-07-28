@@ -18,6 +18,8 @@ import { Close as CloseIcon } from "@mui/icons-material";
 import InputField from "./Components/textFields";
 import CalcButton from "./Components/CalcButton";
 import ResultSection from "./Components/ResultSection";
+import ButtonCalc from "./Components/ButtonCalc";
+import img from './images/3.webp'
 
 const GratuityCalc = () => {
   const [open, setOpen] = useState(false);
@@ -182,18 +184,7 @@ const GratuityCalc = () => {
                   </DialogActions>
                 </Dialog>
               </div>
-              <DialogActions>
-                <Button variant="contained" color="primary" type="submit">
-                  Calculate
-                </Button>
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </DialogActions>
+              <ButtonCalc onClose={handleClose} />
             </form>
           ) : (
             <Dialog
@@ -210,7 +201,7 @@ const GratuityCalc = () => {
                 justifyContent: "center",
               }}
             >
-              <DialogTitle style={{ marginBottom: "-40px", fontSize: "22px" }}>
+              <DialogTitle style={{ marginBottom: "-20px", fontSize: "22px" }}>
                 Gratuity Calculator
               </DialogTitle>
               <IconButton
@@ -319,16 +310,28 @@ const GratuityCalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection
-                              title="Gratuity:"
-                              copyValue={`₹${gratuityResult}`}
+                              title="Gratuity Amount is "
+                              CopyValue={`₹${gratuityResult}`}
                             />
                           </Table>
                         </TableContainer>
                       </CardContent>
+                      <Card 
+                      style={{
+                          height: "100%",
+                          overflowY: "auto",
+                          marginTop: "-3rem",
+                          marginRight: "3rem",
+                        }}
+                      >
+                      <CardContent align="center">
+                        <img src={img} alt="" height={400}   />
+                      </CardContent>
+                      </Card>
                     </Card>
                   </Grid>
                 </Grid>
