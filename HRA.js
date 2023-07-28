@@ -304,7 +304,7 @@ const HRACalc = () => {
                       }}
                     >
                       <CardContent style={{ flex: 1 }}>
-                        <Typography variant="h4">Result</Typography>
+                      <Typography variant="h4">Result</Typography>
                         <TableContainer>
                           <Table>
                             <ResultSection

@@ -31,6 +31,10 @@
   }
   .completed:hover {
     background-color: #103865;
+<<<<<<< HEAD
+=======
+    color: white;
+>>>>>>> 9142e9e63271febcbc3db90e6641eb3bb3bb8b6f
   }
   .completeit{
     background-color:rgb(200, 208, 41);

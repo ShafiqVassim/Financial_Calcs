@@ -115,31 +115,37 @@ const RetirementCalc = () => {
     const inflationValue = parseFloat(inflation) / 100;
     const returnsValue = parseFloat(returns) / 100;
     const currentInvestmentValue = parseFloat(currentInvestment);
-
+  
     const yearsToRetirement = retirementAgeValue - currentAgeValue;
     const yearsAfterRetirement = retirementTillAgeValue - retirementAgeValue;
-
+  
     const monthlyExpenseatValue =
       expensesValue * Math.pow(1 + inflationValue, yearsToRetirement);
     console.log("monthlyExpenseatValue", monthlyExpenseatValue);
-
+  
     const corpusNeededValue =
       monthlyExpenseatValue *
-        12 *
-        ((1 -
-          Math.pow(
-            1 + (1 + returnsValue) / (1 + inflationValue) - 1,
-            -yearsAfterRetirement
-          )) /
-          ((1 + returnsValue) / (1 + inflationValue) - 1)) -
+      12 *
+      ((1 -
+        Math.pow(1 + (1 + returnsValue) / (1 + inflationValue) - 1, -yearsAfterRetirement)) /
+        ((1 + returnsValue) / (1 + inflationValue) - 1)) -
       currentInvestmentValue;
     console.log("corpusNeededValue", corpusNeededValue);
-
+  
     const monthlyNeededValue =
       (corpusNeededValue * (returnsValue / 12)) /
       (Math.pow(1 + returnsValue / 12, yearsToRetirement * 12) - 1);
     console.log("monthlyNeededValue", monthlyNeededValue);
+  
+    const chartup = retirementAge - currentAge ;
+    console.log("chartup", chartup)
+    
+    let a = (monthlyNeededValue *12);
+    console.log("initial value", a);
+    
+    const calculatedValues = [Math.round(a)];
 
+<<<<<<< HEAD
     const chartup = retirementAge - currentAge;
     console.log("chartup", chartup);
 
@@ -198,6 +204,56 @@ const RetirementCalc = () => {
     console.log("yearsArray2", yearsArray2);
     console.log("array2", array2);
 
+=======
+    for (let i = 1; i < chartup; i++) {
+    const b = (a * (1 + returnsValue) + (monthlyNeededValue * 12));
+    a = b;
+    calculatedValues.push(Math.round(a));
+    console.log("a",Math.round(a))
+    }
+
+    console.log("calculatedValues", calculatedValues);
+    
+    const currentYear = new Date().getFullYear(); // Get the current year
+const years = [currentYear + 1 ];
+
+for (let i = 1; i < chartup -1 ; i++) {
+  const year = (currentYear +1) + i;
+  years.push(year);
+}
+    console.log("years", years);
+   
+   
+    let next_chart =parseInt(calculatedValues.slice(-1));
+    console.log(next_chart)
+    let array2 = [];   
+     let power_value = chartup+1;
+     
+  while(next_chart>0){
+   let  part2 = Math.round((monthlyExpenses*12)*Math.pow((1+inflationValue),power_value));
+  console.log((part2))
+  power_value+=1;
+  // console.log((next_chart))
+  next_chart =(next_chart)*(1+returnsValue)-(part2);
+  
+  if((next_chart) > 0 ){
+  array2.push(Math.floor(next_chart));
+  }}
+  console.log("ghj",array2)
+
+const yearsArray2 = [];
+  let nextYear = years[years.length - 1] + 1;
+  for (let i = 0; i <= array2.length; i++) {
+    yearsArray2.push(nextYear);
+    nextYear++;
+  }
+
+  console.log("yearsArray2", yearsArray2);
+  
+    console.log("yearsArray2", yearsArray2);
+    console.log("array2", array2);
+  
+>>>>>>> 9142e9e63271febcbc3db90e6641eb3bb3bb8b6f
     setmonthlyExpensesat(Math.round(monthlyExpenseatValue));
     setcorpusNeeded(Math.floor(Math.round(corpusNeededValue)));
     setmonthlyNeeded(Math.floor(Math.round(monthlyNeededValue)));
@@ -205,6 +261,7 @@ const RetirementCalc = () => {
 
     const allYears = [...years, ...yearsArray2];
 
+<<<<<<< HEAD
     // Calculate the length of calculatedValues
     const calculatedValuesLength = calculatedValues.length;
 
@@ -215,6 +272,18 @@ const RetirementCalc = () => {
     const combinedData = [...nullValues, ...array2];
     console.log("combinedData", combinedData);
 
+=======
+// Calculate the length of calculatedValues
+const calculatedValuesLength = calculatedValues.length;
+
+// Create a new array containing null values to fill the gap between calculatedValues and array2
+const nullValues = Array(calculatedValuesLength ).fill(null);
+
+// Combine the null values and array2 data
+const combinedData = [...nullValues, ...array2];
+console.log("combinedData", combinedData);
+  
+>>>>>>> 9142e9e63271febcbc3db90e6641eb3bb3bb8b6f
     setChartOptions({
       ...chartOptions,
       chart: {
@@ -246,7 +315,11 @@ const RetirementCalc = () => {
       annotations: {
         xaxis: [
           {
+<<<<<<< HEAD
             x: years[years.length + 2],
+=======
+            x: years[years.length + 2 ],
+>>>>>>> 9142e9e63271febcbc3db90e6641eb3bb3bb8b6f
             borderColor: "#000",
             borderWidth: 1,
             label: {
@@ -269,9 +342,15 @@ const RetirementCalc = () => {
       },
       legend: {
         position: "top",
+<<<<<<< HEAD
       },
     });
 
+=======
+      }
+    });
+  
+>>>>>>> 9142e9e63271febcbc3db90e6641eb3bb3bb8b6f
     setChartSeries([
       {
         name: "Accumulation",
@@ -283,6 +362,7 @@ const RetirementCalc = () => {
       },
     ]);
   };
+  
 
   return (
     <div

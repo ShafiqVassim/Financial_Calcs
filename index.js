@@ -13,7 +13,11 @@ import GratuityCalc from "./Gratuity";
 import HowLongMoneyWillLastCalc from "./HowLongMoneylasts";
 import HRACalc from "./HRA";
 import IncomeTaxCalc from "./IncomeTax";
+<<<<<<< HEAD
 import LifeInsuranceCalc from "./lifeInsurance";
+=======
+import LifeInsuranceCalc from "./LifeInsurance";
+>>>>>>> 9142e9e63271febcbc3db90e6641eb3bb3bb8b6f
 import PortfolioReturnCalc from "./PortfolioReturn";
 import PresentValueCalc from "./PresentValue";
 import RetirementCalc from "./Retirement";
